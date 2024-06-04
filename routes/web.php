@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebpagesLinksController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -17,9 +18,11 @@ Route::middleware([
 });
 
 Route::get('/servers', function () {
-    // return view('servers');
+    return view('servers');
 })->name('servers');
 
 Route::get('/webapps', function () {
-    // return view('webapps');
+    return view('webapps');
 })->name('webapps');
+
+Route::post('/webpages_links', [WebpagesLinksController::class, 'store'])->name('webpages_links.store');
