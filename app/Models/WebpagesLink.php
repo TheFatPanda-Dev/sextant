@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class WebpagesLink extends Model
 {
     use HasFactory;
+
+    protected $table = 'webpages_links';
 }

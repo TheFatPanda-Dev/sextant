@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebpagesLinksController;
+use App\Http\Controllers\SSLController;
 
 Route::get('/', function () {
     return view('dashboard');
@@ -26,3 +27,5 @@ Route::get('/webapps', function () {
 })->name('webapps');
 
 Route::post('/webpages_links', [WebpagesLinksController::class, 'store'])->name('webpages_links.store');
+
+Route::get('/certificate', [SSLController::class, 'getCertificateInfo']);

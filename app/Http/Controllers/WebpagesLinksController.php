@@ -32,15 +32,19 @@ class WebpagesLinksController extends Controller
             'webpage_link' => 'required|url',
         ]);
 
-        $existingLink = WebpagesLink::firstWhere('link', $request->webpage_link);
+        // Parse the URL and get the host part
+        $parsedUrl = parse_url($request->webpage_link);
+        $domain = $parsedUrl['host'] ?? '';
+
+        $existingLink = WebpagesLink::firstWhere('link', $domain);
 
         if ($existingLink) {
             return back()->with('info', 'Link already in database.');
         } else {
             $link = new WebpagesLink;
-            $link->link = $request->webpage_link;
+            $link->link = $domain;
             $link->save();
-    
+
             return back()->with('success', 'Link added successfully.');
         }
     }
@@ -76,5 +80,4 @@ class WebpagesLinksController extends Controller
     {
         //
     }
-
 }

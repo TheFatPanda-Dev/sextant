@@ -7,29 +7,9 @@ use App\Models\WebpagesLink;
 
 class WebpagesLinksComponent extends Component
 {
-    public $webpage_link;
-
-    protected $rules = [
-        'webpage_link' => 'required|url',
-    ];
-
-    public function store()
-    {
-        $this->validate();
-
-        $existingLink = WebpagesLink::firstWhere('link', $this->webpage_link);
-
-        if ($existingLink) {
-            session()->flash('message', 'Link already in database.');
-            session()->flash('messageType', 'info');
-        } else {
-            WebpagesLink::create(['link' => $this->webpage_link]);
-            session()->flash('message', 'Link added successfully.');
-            session()->flash('messageType', 'success');
-        }
-
-        $this->dispatchBrowserEvent('message-displayed');
-    }
+    public $confirmingLinkDeletion = false;
+    public $linkIdToBeDeleted;
+    protected $listeners = ['triggerDelete' => 'confirmDelete'];
 
     public function render()
     {
@@ -38,5 +18,33 @@ class WebpagesLinksComponent extends Component
         return view('livewire.webpages-links-component', [
             'links' => $links,
         ]);
+    }
+
+    public function delete($id)
+    {
+        $link = WebpagesLink::find($id);
+
+        if ($link) {
+            $link->delete();
+            session()->flash('message', 'Link deleted successfully.');
+            session()->flash('messageType', 'success');
+        } else {
+            session()->flash('message', 'Link not found.');
+            session()->flash('messageType', 'error');
+        }
+    }
+
+    public function confirmDelete($id)
+    {
+        $this->linkIdToBeDeleted = $id;
+        $this->confirmingLinkDeletion = true;
+    }
+
+    public function deleteLink()
+    {
+        WebpagesLink::destroy($this->linkIdToBeDeleted);
+        $this->confirmingLinkDeletion = false;
+        session()->flash('message', 'Link deleted successfully.');
+        session()->flash('messageType', 'success');
     }
 }
