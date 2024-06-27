@@ -18,6 +18,9 @@
                     <x-nav-link href="{{ route('servers') }}" :active="request()->routeIs('servers')">
                         {{ __('Servers') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('certificate') }}" :active="request()->routeIs('certificate')">
+                        {{ __('Certificates') }}
+                    </x-nav-link>
                     <x-nav-link href="{{ route('webapps') }}" :active="request()->routeIs('webapps')">
                         {{ __('WebApps') }}
                     </x-nav-link>

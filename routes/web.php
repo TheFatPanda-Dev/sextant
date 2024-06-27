@@ -28,4 +28,4 @@ Route::get('/webapps', function () {
 
 Route::post('/webpages_links', [WebpagesLinksController::class, 'store'])->name('webpages_links.store');
 
-Route::get('/certificate', [SSLController::class, 'getCertificateInfo']);
+Route::get('/certificate', [SSLController::class, 'getCertificateInfo'])->name('certificate');

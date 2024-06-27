@@ -16,7 +16,6 @@
                         <p>Expiration Date: {{ $link->cert_expiration_date }}</p>
                     </div>
                 @endforeach
-
             </div>
         </div>
     </div>
